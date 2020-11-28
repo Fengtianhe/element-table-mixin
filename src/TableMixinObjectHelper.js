@@ -6,7 +6,7 @@
  * @param strict
  * @returns {*}
  */
-export function getPropByPath(obj, path, strict) {
+function getPropByPath (obj, path, strict) {
   let tempObj = obj;
   path = path.replace(/\[(\w+)\]/g, '.$1');
   path = path.replace(/^\./, '');
@@ -25,4 +25,8 @@ export function getPropByPath(obj, path, strict) {
     }
   }
   return tempObj;
+}
+
+export default {
+  getPropByPath
 }

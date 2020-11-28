@@ -4,7 +4,7 @@
  * @param time
  * @returns {*}
  */
-export function dateTimeFormat (format, time = new Date()) {
+function dateTimeFormat (format, time = new Date()) {
   const o = {
     "M+": time.getMonth() + 1, // month
     "d+": time.getDate(), // day
@@ -25,7 +25,7 @@ export function dateTimeFormat (format, time = new Date()) {
   return format
 }
 
-export function numberFormat (value) {
+function numberFormat (value) {
   if (value === null || value === undefined) return '-'
 
   let isMinus = value < 0 // 是否是负数
@@ -46,7 +46,7 @@ export function numberFormat (value) {
 }
 
 
-export function tableFormatDateTime (row, column, cellValue) {
+function tableFormatDateTime (row, column, cellValue) {
   if (!cellValue) return '-';
   // cellValue = cellValue.replace(new RegExp(/-/gm), '/');
   let dt = new Date(cellValue);
@@ -56,7 +56,7 @@ export function tableFormatDateTime (row, column, cellValue) {
 
 
 // 格式化时间 Date 兼容 Safari
-export function tableFormatDate (row, column, cellValue) {
+function tableFormatDate (row, column, cellValue) {
   if (!cellValue) return '-';
   // cellValue = cellValue.replace(new RegExp(/-/gm), '/');
   let dt = new Date(cellValue);
@@ -65,19 +65,29 @@ export function tableFormatDate (row, column, cellValue) {
 }
 
 
-export function tableFormatNumber (row, column, cellValue) {
+function tableFormatNumber (row, column, cellValue) {
   return numberFormat(cellValue);
 }
 
 
-export function tableFormatPercent (row, column, cellValue) {
+function tableFormatPercent (row, column, cellValue) {
   return Number(cellValue * 100).toFixed(2) + '%';
 }
 
 
-export function tableIsNull (row, column, cellValue) {
+function tableIsNull (row, column, cellValue) {
   if (cellValue) {
     return cellValue;
   }
   return '-';
+}
+
+export default {
+  dateTimeFormat,
+  numberFormat,
+  tableFormatDateTime,
+  tableFormatDate,
+  tableFormatNumber,
+  tableFormatPercent,
+  tableIsNull
 }

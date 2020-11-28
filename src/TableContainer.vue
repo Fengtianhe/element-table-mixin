@@ -8,11 +8,13 @@
             :label="col.label"
             :prop="col.prop"
             :formatter="(row, column, cellValue) => formatterTableColumnValue(row, column, cellValue, col)"
+            :width="col.width || 'auto'"
+            :align="col.align || 'left'"
         ></el-table-column>
         <!--   插槽     -->
         <slot name="column"></slot>
 
-        <el-table-column label="操作" v-if="tableOps.length">
+        <el-table-column label="操作" v-if="tableOps.length" width="50" align="center">
           <template slot-scope="scope">
             <el-dropdown @command="command => handleOpTableItem(command, scope)" size="mini">
               <span class="el-dropdown-link">
