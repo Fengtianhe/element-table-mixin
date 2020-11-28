@@ -24,5 +24,10 @@ const TableMixinConfig = {
 
   // tableData 对应的字段
   TABLE_DATA_FIELD: 'tableData',
+
+  // el table 全局配置
+  EL_TABLE_STRIPE: true,
+  EL_TABLE_BORDER: true,
+  EL_TABLE_SIZE: 'small'
 }
 export default TableMixinConfig;

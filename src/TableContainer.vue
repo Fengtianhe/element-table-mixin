@@ -1,7 +1,12 @@
 <template>
   <div class="table-container">
     <div class="table">
-      <el-table stripe :data="tableData.lists">
+      <el-table
+          :stripe="stripe"
+          :data="tableData.lists"
+          :border="border"
+          :size="size"
+      >
         <el-table-column
             v-for="col in columns"
             :key="`${col.label}-${col.prop}`"
@@ -51,6 +56,7 @@
 
 <script>
 import TableMixin from './TableMixin';
+import TableMixinConfig from './TableMixinConfig'
 
 export default {
   name: 'TableContainer',
@@ -73,13 +79,28 @@ export default {
       default: function () {
         return []
       }
+    },
+    elTableStripe: {
+      type: Boolean,
+      default: undefined
+    },
+    elTableBorder: {
+      type: Boolean,
+      default: undefined
+    },
+    elTableSize: {
+      type: String,
+      default: undefined
     }
   },
-  data() {
+  data () {
     return {
       baseUrl: this.url,
       tableData: {},
-      filterForm: {}
+      filterForm: {},
+      stripe: this.elTableStripe === undefined ? TableMixinConfig.EL_TABLE_STRIPE : this.elTableStripe,
+      border: this.elTableBorder === undefined ? TableMixinConfig.EL_TABLE_BORDER : this.elTableBorder,
+      size: this.elTableSize || TableMixinConfig.EL_TABLE_SIZE
     };
   },
   methods: {

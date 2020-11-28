@@ -86,9 +86,23 @@ export default {
 ##### props
 |  prop    | require | 描述       | type                | 说明 |
 |  ----    | ----    | ----       |  ----               | ---- |
-| columns  | true    | 表格的列    | Array<ColumnObject> | ColumnObject = {label: '', prop: '', formatter: (row, column, cellValue) => {}} |
+| columns  | true    | 表格的列    | Array<ColumnObject> | ColumnObject 见下面例子 |
 | tableOps | false   | 行数据操作项 | Array<OpObject>     | OpObject = {command: '', name: '', handle: (scope) => {}} |
 | url      | true    | 列表请求地址 | String              |
+| elTableStripe      | false    | 表格是否使用斑马线 | Boolean              | 全局可使用TableMixinConfig配置 
+| elTableBorder      | false    | 表格是否使用边框 | Boolean              | 全局可使用TableMixinConfig配置
+| elTableSize      | false    | 表格的尺寸 | String              | 'mini, small, medium' 全局可使用TableMixinConfig配置
+##### ColumnObject
+```json
+{
+    "label": "创建时间", 
+    "prop": "createdAt", 
+    "align": "center", 
+    "width": "130px", 
+    "formatter": tableFormatDate,
+}
+```
+
 ##### event
 |  事件名   | 说明  |
 |  ----  | ----  |
@@ -113,6 +127,9 @@ export default {
 | RESPONSE_PAGESIZE_FIELD | 每页数量对应的字段 data.size, |
 | RESPONSE_PAGENUM_FIELD | 页码对应的字段 data.pageNum, |
 | RESPONSE_TOTAL_FIELD | 总条数对应的字段 data.total, |
+| EL_TABLE_STRIPE | 全局设置表格样式：斑马线 |
+| EL_TABLE_BORDER | 全局设置表格样式：边框 |
+| EL_TABLE_SIZE | 全局设置表格样式：尺寸 |
 
 ##### 默认配置的返回值
 如果后端的返回值和默认不一致，请调整配置项
