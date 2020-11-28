@@ -21,7 +21,7 @@ import {TableMixinConfig} from 'element-table-mixin'
 TableMixinConfig.REQUEST = axios
 ```
 
-```javascript
+```vue
 <template>
   <div>
     ...
@@ -80,26 +80,26 @@ export default {
 ```
 
 ***
-###参数
-#####props
+### 参数
+##### props
 |  prop    | require | 描述       | type                | 说明 |
 |  ----    | ----    | ----       |  ----               | ---- |
 | columns  | true    | 表格的列    | Array<ColumnObject> | ColumnObject = {label: '', prop: '', formatter: (row, column, cellValue) => {}} |
 | tableOps | false   | 行数据操作项 | Array<OpObject>     | OpObject = {command: '', name: '', handle: (scope) => {}} |
 | url      | true    | 列表请求地址 | String              |
-#####event
+##### event
 |  事件名   | 说明  |
 |  ----  | ----  |
-#####methods
+##### methods
 |  方法           | 说明  |
 |  ----          | ----  |
 | resetFilter()  | 重置筛选项并查询 |
 | setFilter()    | 设置筛选项并查询 |
-#####slot
+##### slot
 | name | 说明 |
 | --- | --- |
 | column | 自定义列 |
-#####TableMixinConfig
+##### TableMixinConfig
 | name | 说明 |
 | --- | --- |
 | REQUEST | 默认请求使用 axios, |
