@@ -78,6 +78,8 @@ export default {
 };
 </script>
 ```
+### 效果图
+![alt 效果图](./example/1.png)
 
 ***
 ### 参数

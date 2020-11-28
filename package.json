@@ -1,6 +1,6 @@
 {
   "name": "element-table-mixin",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "基于ElementUI 封装的TableMixin",
   "main": "index.js",
   "scripts": {
