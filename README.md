@@ -12,6 +12,15 @@
 `yarn add element-table-mixin` or `npm i element-table-mixin`
 
 ### 使用
+main.js
+```javascript
+import axios from 'axios'
+import {TableMixinConfig} from 'element-table-mixin'
+
+// 其他配置详见文档
+TableMixinConfig.REQUEST = axios
+```
+
 ```javascript
 <template>
   <div>
@@ -90,6 +99,32 @@ export default {
 | name | 说明 |
 | --- | --- |
 | column | 自定义列 |
+#####TableMixinConfig
+| name | 说明 |
+| --- | --- |
+| REQUEST | 默认请求使用 axios, |
+| PAGE_SIZE_DEFAULT | 每页默认数量 15, |
+| PAGE_NUM_DEFAULT | 默认页码 1, |
+| REQUEST_PAGENUM_FIELD | 请求的页码字段 pageNum, |
+| REQUEST_PAGESIZE_FIELD | 请求的每页条数字段 pageSize, |
+| RESPONSE_LIST_FIELD | 列表数据对应字段 data.lists, |
+| RESPONSE_PAGESIZE_FIELD | 每页数量对应的字段 data.size, |
+| RESPONSE_PAGENUM_FIELD | 页码对应的字段 data.pageNum, |
+| RESPONSE_TOTAL_FIELD | 总条数对应的字段 data.total, |
+
+##### 默认配置的返回值
+如果后端的返回值和默认不一致，请调整配置项
+```json
+{
+  ...,
+  "data": {
+    "lists": [],
+    "size": 15,
+    "pageNum": 1,
+    "total": 50
+  }
+}
+```
 ***
 交流联系方式：
 QQ：545704061
