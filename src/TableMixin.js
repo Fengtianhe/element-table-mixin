@@ -1,6 +1,7 @@
-import { getPropByPath } from 'element-table-mixin/src/TableMixinObjectHelper';
+import TableMixinObjectHelper from 'element-table-mixin/src/TableMixinObjectHelper';
 import TableMixinConfig from "./TableMixinConfig";
 
+const {getPropByPath} = TableMixinObjectHelper
 
 const TableMixin = {
   mounted() {
