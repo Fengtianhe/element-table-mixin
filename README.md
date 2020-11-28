@@ -79,7 +79,7 @@ export default {
 </script>
 ```
 ### 效果图
-![alt 效果图](./example/1.png)
+![alt 效果图](http://blog.fengtianhe.cn/images/element-table-mixin.png)
 
 ***
 ### 参数
