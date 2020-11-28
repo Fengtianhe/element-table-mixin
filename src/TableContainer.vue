@@ -54,8 +54,14 @@ export default {
   name: 'TableContainer',
   mixins: [TableMixin],
   props: {
+    url: {
+      type: String,
+      required: true,
+      default: ''
+    },
     columns: {
       type: Array,
+      required: true,
       default: function () {
         return [];
       }
@@ -65,10 +71,6 @@ export default {
       default: function () {
         return []
       }
-    },
-    url: {
-      type: String,
-      default: ''
     }
   },
   data() {
