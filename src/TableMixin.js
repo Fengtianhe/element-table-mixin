@@ -1,4 +1,4 @@
-import { getPropByPath } from './ObjectHelper';
+import { getPropByPath } from 'element-table-mixin/src/TableMixinObjectHelper';
 import TableMixinConfig from "./TableMixinConfig";
 
 
