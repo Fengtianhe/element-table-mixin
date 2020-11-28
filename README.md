@@ -8,6 +8,9 @@
 - [x] 支持自定义基于Axios封装的请求函数
 
 ***
+### 安装
+`yarn add element-table-mixin` or `npm i element-table-mixin`
+
 ### 使用
 ```javascript
 <template>
