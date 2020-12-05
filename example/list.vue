@@ -24,6 +24,7 @@
         style="flex:1"
         :columns="tableColumns"
         :table-ops="tableOps"
+        :filters.sync="filterForm"
         ref="table">
       <template slot="column">
 

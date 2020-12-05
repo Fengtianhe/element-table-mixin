@@ -119,6 +119,7 @@ export default {
 |  ----          | ----  |
 | resetFilter()  | 重置筛选项并查询 |
 | setFilter()    | 设置筛选项并查询 |
+| setTableFilter() | 从Url的Query中获取filters中对应的值进行赋值查询
 ##### slot
 | name | 说明 |
 | --- | --- |
@@ -153,7 +154,6 @@ export default {
 }
 ```
 ***
-交流联系方式：
-QQ：545704061
-
-微信：fth545704061
+###### 交流联系方式：
+* QQ：545704061
+* 微信：fth545704061

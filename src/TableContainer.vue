@@ -115,7 +115,7 @@ export default {
   },
   created () {
     if (this.baseUrl && this.autoLoad) {
-      this.setFilter();
+      this.setTableFilter();
     }
   },
   watch: {
@@ -124,6 +124,13 @@ export default {
       deep: true,
       handler: function (n) {
         this.filterForm = n
+      }
+    },
+    'filterForm': {
+      immediate: true,
+      deep: true,
+      handler: function (n) {
+        this.$emit('update:filters', n)
       }
     }
   },
