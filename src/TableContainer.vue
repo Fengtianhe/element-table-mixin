@@ -29,7 +29,7 @@
                 <el-dropdown-item
                     v-for="op in tableOps"
                     :command="op.command"
-                    :key="op.command"
+                    v-if="showBtn(op, scope)"
                 >{{op.name}}
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -91,17 +91,41 @@ export default {
     elTableSize: {
       type: String,
       default: undefined
+    },
+    autoLoad: {
+      type: Boolean,
+      default: true
+    },
+    filters: {
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   data () {
     return {
       baseUrl: this.url,
       tableData: {},
-      filterForm: {},
+      filterForm: this.filterForm,
       stripe: this.elTableStripe === undefined ? TableMixinConfig.EL_TABLE_STRIPE : this.elTableStripe,
       border: this.elTableBorder === undefined ? TableMixinConfig.EL_TABLE_BORDER : this.elTableBorder,
       size: this.elTableSize || TableMixinConfig.EL_TABLE_SIZE
     };
+  },
+  created () {
+    if (this.baseUrl && this.autoLoad) {
+      this.setFilter();
+    }
+  },
+  watch: {
+    'filters': {
+      immediate: true,
+      deep: true,
+      handler: function (n) {
+        this.filterForm = n
+      }
+    }
   },
   methods: {
     formatterTableColumnValue (row, column, cellValue, dataitem) {
@@ -117,6 +141,10 @@ export default {
       }, {})
 
       opMap[command].handle && opMap[command].handle(scope)
+    },
+    showBtn (config, scope) {
+      let showBtn = !config.hide || !config.hide(scope)
+      return showBtn
     }
   }
 };

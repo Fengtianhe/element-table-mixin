@@ -30,6 +30,8 @@ TableMixinConfig.REQUEST = axios
         style="flex:1"
         :columns="tableColumns"
         :table-ops="tableOps"
+        :auto-load="true"
+        :filters="filterForm"
         ref="table">
           <template slot="column">
             <el-table-cloumn></el-table-cloumn>
@@ -61,7 +63,7 @@ export default {
       ],
       tableOps: [
         {command: 'EDIT', name: '编辑', handle: this.showEditDialog},
-        {command: 'DISABLE', name: '停用', handle: this.showEditDialog}
+        {command: 'DISABLE', name: '停用', handle: this.showEditDialog, hide: this.hideBtn}
       ],
       ...
     };
@@ -72,6 +74,9 @@ export default {
       
     },
     tableFormatDate(row, column, cellValue){
+      
+    },
+    hideBtn(scope){
       
     }
   }
@@ -92,6 +97,7 @@ export default {
 | elTableStripe      | false    | 表格是否使用斑马线 | Boolean              | 全局可使用TableMixinConfig配置 
 | elTableBorder      | false    | 表格是否使用边框 | Boolean              | 全局可使用TableMixinConfig配置
 | elTableSize      | false    | 表格的尺寸 | String              | 'mini, small, medium' 全局可使用TableMixinConfig配置
+| elTableSize      | false    | 是否自动加载请求 | Boolean              | 默认 true
 ##### ColumnObject
 ```json
 {

@@ -4,16 +4,11 @@ import TableMixinConfig from "./TableMixinConfig";
 const {getPropByPath} = TableMixinObjectHelper
 
 const TableMixin = {
-  mounted() {
-    if (this.baseUrl) {
-      this.setFilter();
-    }
-  },
   methods: {
     /**
      * 从filterForm中获取筛选项
      */
-    setTableFilter() {
+    setTableFilter () {
       const self = this;
       const baseUrl = self.baseUrl;
       if (baseUrl) {
@@ -52,14 +47,14 @@ const TableMixin = {
         self.setFilter();
       }
     },
-    resetFilter(filters = {}) {
+    resetFilter (filters = {}) {
       const self = this;
       for (let f in self.filterForm) {
         self.filterForm[f] = null;
       }
       self.setUrlFilters(filters);
     },
-    setFilter() {
+    setFilter () {
       const self = this;
       self.setUrlFilters(self.getFilters());
     },
@@ -67,11 +62,7 @@ const TableMixin = {
       const s = {};
       const self = this;
       let filters = self.filterForm;
-      const invisible = ['vendorId'];
       for (const f in filters) {
-        if (invisible.includes(f)) {
-          continue;
-        }
         let filter = filters[f];
         if (filter) {
           if (typeof (filter) === 'number' || typeof (filter) === 'string' || typeof (filter) === 'boolean') {
@@ -94,40 +85,45 @@ const TableMixin = {
     setUrlFilters: function (filters) {
       console.log('table-mixin: setUrlFilters function');
       const self = this;
-      filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] = filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGENUM_FIELD];
-      filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] = filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD];
-      self.$router.replace({ path: self.$route.path, query: filters });
+      filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] = (filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGENUM_FIELD]) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] = (filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD]) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      self.$router.replace({path: self.$route.path, query: filters});
       self.fetchTableData(filters);
     },
-    async fetchTableData(params = {}) {
+    async fetchTableData (params = {}) {
       const self = this;
       const baseUrl = self.baseUrl;
-      const method = self.tableRequestMethod || 'get';
+      const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
       params[TableMixinConfig.REQUEST_PAGENUM_FIELD] = params[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? params[TableMixinConfig.REQUEST_PAGENUM_FIELD] : this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.REQUEST_PAGENUM_FIELD] ? this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.REQUEST_PAGENUM_FIELD] : TableMixinConfig.PAGE_NUM_DEFAULT;
       params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] = params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] : this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD] ? this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD] : TableMixinConfig.PAGE_SIZE_DEFAULT;
       // options.orderBy = this.filterForm && this.filterForm.orderBy ? this.filterForm.orderBy : ''
       if (baseUrl) {
-        params.loading = true;
         const axiosRequestConfig = {
           method,
-          url: baseUrl
+          url: baseUrl,
+          params: method === 'get' ? params : null,
+          data: method === 'post' ? params : null
         };
-        const response = await TableMixinConfig.REQUEST.request(axiosRequestConfig);
-        if (!response) {
-          throw Error('unknown table data response');
-        }
+        try {
+          const response = await TableMixinConfig.REQUEST.request(axiosRequestConfig);
+          if (!response) {
+            throw Error('unknown table data response');
+          }
 
-        self[TableMixinConfig.TABLE_DATA_FIELD] = {
-          lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
-          pageSize: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
-          pageNumber: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
-          total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD) || 0
-        };
-        self.afterFetchTableData && self.afterFetchTableData();
+          self[TableMixinConfig.TABLE_DATA_FIELD] = {
+            lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
+            pageSize: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
+            pageNumber: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
+            total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD) || 0
+          };
+          self.afterFetchTableData && self.afterFetchTableData();
+        } catch (e) {
+          throw new Error("request failure, e => ", e)
+        }
       }
     },
     // 排序数据
-    handleTableSortChange({ column, prop, order }) {
+    handleTableSortChange ({column, prop, order}) {
       console.log(column, prop, order);
       let sortType = '';
       // 驼峰转下划线
