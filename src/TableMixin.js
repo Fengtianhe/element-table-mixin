@@ -37,11 +37,11 @@ const TableMixin = {
           }
         }
 
-        if (urlQuery[TableMixinConfig.REQUEST_PAGENUM_FIELD]) {
-          self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGENUM_FIELD] = urlQuery[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? parseInt(urlQuery[TableMixinConfig.REQUEST_PAGENUM_FIELD]) : TableMixinConfig.PAGE_NUM_DEFAULT;
+        if (urlQuery['pageNumber']) {
+          self['tableData']['pageNumber'] = urlQuery['pageNumber'] ? parseInt(urlQuery['pageNumber']) : TableMixinConfig.PAGE_NUM_DEFAULT;
         }
-        if (urlQuery[TableMixinConfig.REQUEST_PAGESIZE_FIELD]) {
-          self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD] = urlQuery[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? parseInt(urlQuery[TableMixinConfig.REQUEST_PAGESIZE_FIELD]) : TableMixinConfig.PAGE_SIZE_DEFAULT;
+        if (urlQuery['pageSize']) {
+          self['tableData']['pageSize'] = urlQuery['pageSize'] ? parseInt(urlQuery['pageSize']) : TableMixinConfig.PAGE_SIZE_DEFAULT;
         }
 
         self.setFilter();
@@ -85,8 +85,8 @@ const TableMixin = {
     setUrlFilters: function (filters) {
       console.log('table-mixin: setUrlFilters function');
       const self = this;
-      filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] = (filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? filters[TableMixinConfig.REQUEST_PAGENUM_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGENUM_FIELD]) || TableMixinConfig.PAGE_NUM_DEFAULT;
-      filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] = (filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? filters[TableMixinConfig.REQUEST_PAGESIZE_FIELD] : self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD]) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters['pageNumber'] = (filters['pageNumber'] ? filters['pageNumber'] : self['tableData']['pageNumber']) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters['pageSize'] = (filters['pageSize'] ? filters['pageSize'] : self['tableData']['pageSize']) || TableMixinConfig.PAGE_NUM_DEFAULT;
       self.$router.replace({path: self.$route.path, query: filters});
       self.fetchTableData(filters);
     },
@@ -94,8 +94,8 @@ const TableMixin = {
       const self = this;
       const baseUrl = self.baseUrl;
       const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
-      params[TableMixinConfig.REQUEST_PAGENUM_FIELD] = params[TableMixinConfig.REQUEST_PAGENUM_FIELD] ? params[TableMixinConfig.REQUEST_PAGENUM_FIELD] : this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.REQUEST_PAGENUM_FIELD] ? this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.REQUEST_PAGENUM_FIELD] : TableMixinConfig.PAGE_NUM_DEFAULT;
-      params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] = params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] ? params[TableMixinConfig.REQUEST_PAGESIZE_FIELD] : this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD] ? this[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.RESPONSE_PAGESIZE_FIELD] : TableMixinConfig.PAGE_SIZE_DEFAULT;
+      params['pageNumber'] = params['pageNumber'] ? params['pageNumber'] : this['tableData']['pageNumber'] ? this['tableData']['pageNumber'] : TableMixinConfig.PAGE_NUM_DEFAULT;
+      params['pageSize'] = params['pageSize'] ? params['pageSize'] : this['tableData']['pageSize'] ? this['tableData']['pageSize'] : TableMixinConfig.PAGE_SIZE_DEFAULT;
       // options.orderBy = this.filterForm && this.filterForm.orderBy ? this.filterForm.orderBy : ''
       if (baseUrl) {
         const axiosRequestConfig = {
@@ -110,7 +110,7 @@ const TableMixin = {
             throw Error('unknown table data response');
           }
 
-          self[TableMixinConfig.TABLE_DATA_FIELD] = {
+          self['tableData'] = {
             lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
             pageSize: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
             pageNumber: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
@@ -141,15 +141,15 @@ const TableMixin = {
       console.log('table-mixin: fetchWithPagination function');
       const self = this;
       let urlQuery = self.getFilters();
-      urlQuery[TableMixinConfig.REQUEST_PAGENUM_FIELD] = currentPage;
-      if (self[TableMixinConfig.TABLE_DATA_FIELD].total) {
+      urlQuery['pageNumber'] = currentPage;
+      if (self['tableData'].total) {
         self.setUrlFilters(urlQuery);
       }
     },
     fetchWithPageSize: function (pageSize) {
       console.log('table-mixin: fetchWithPageSize function');
       const self = this;
-      self[TableMixinConfig.TABLE_DATA_FIELD][TableMixinConfig.REQUEST_PAGESIZE_FIELD] = pageSize;
+      self['tableData']['pageSize'] = pageSize;
       self.setFilter();
     }
   }

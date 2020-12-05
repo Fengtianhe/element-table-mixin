@@ -1,6 +1,9 @@
 ### 版本变更记录
 
 ###### v0.0.12(2020-12-05)
+* 优化
+
+###### v0.0.12(2020-12-05)
 * TableContainer中获取数据从setFilter() 改为 setTableFilter(),  从Url自动填充filters，
 * filters支持 `.ysnc` 操作 
 

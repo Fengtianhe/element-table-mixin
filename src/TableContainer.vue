@@ -106,7 +106,10 @@ export default {
   data () {
     return {
       baseUrl: this.url,
-      tableData: {},
+      tableData: {
+        pageNumber: TableMixinConfig.PAGE_NUM_DEFAULT,
+        pageSize: TableMixinConfig.PAGE_SIZE_DEFAULT
+      },
       filterForm: this.filterForm,
       stripe: this.elTableStripe === undefined ? TableMixinConfig.EL_TABLE_STRIPE : this.elTableStripe,
       border: this.elTableBorder === undefined ? TableMixinConfig.EL_TABLE_BORDER : this.elTableBorder,
@@ -157,23 +160,24 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style scoped>
   .table-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 
-    .table {
-      flex: 1;
-    }
+  }
 
-    .pagination {
-      padding: 0 10px;
-      flex: 0 0 50px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
+  .table {
+    flex: 1;
+  }
+
+  .pagination {
+    padding: 0 10px;
+    flex: 0 0 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 </style>
