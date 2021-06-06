@@ -9,6 +9,9 @@ const TableMixinConfig = {
   // 默认页码
   PAGE_NUM_DEFAULT: 1,
 
+  // 请求体中的页码参数
+  REQUEST_FIELD_PAGENUM: 'pageNumber',
+
   // 列表数据对应字段
   RESPONSE_LIST_FIELD: 'data.lists',
   // 每页数量对应的字段

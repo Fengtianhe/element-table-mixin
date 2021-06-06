@@ -37,8 +37,8 @@ const TableMixin = {
           }
         }
 
-        if (urlQuery['pageNumber']) {
-          self['tableData']['pageNumber'] = urlQuery['pageNumber'] ? parseInt(urlQuery['pageNumber']) : TableMixinConfig.PAGE_NUM_DEFAULT;
+        if (urlQuery[TableMixinConfig.REQUEST_FIELD_PAGENUM]) {
+          self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] = urlQuery[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? parseInt(urlQuery[TableMixinConfig.REQUEST_FIELD_PAGENUM]) : TableMixinConfig.PAGE_NUM_DEFAULT;
         }
         if (urlQuery['pageSize']) {
           self['tableData']['pageSize'] = urlQuery['pageSize'] ? parseInt(urlQuery['pageSize']) : TableMixinConfig.PAGE_SIZE_DEFAULT;
@@ -85,7 +85,7 @@ const TableMixin = {
     setUrlFilters: function (filters) {
       console.log('table-mixin: setUrlFilters function');
       const self = this;
-      filters['pageNumber'] = (filters['pageNumber'] ? filters['pageNumber'] : self['tableData']['pageNumber']) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] = (filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] : self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM]) || TableMixinConfig.PAGE_NUM_DEFAULT;
       filters['pageSize'] = (filters['pageSize'] ? filters['pageSize'] : self['tableData']['pageSize']) || TableMixinConfig.PAGE_NUM_DEFAULT;
       self.$router.replace({path: self.$route.path, query: filters});
       self.fetchTableData(filters);
@@ -94,7 +94,7 @@ const TableMixin = {
       const self = this;
       const baseUrl = self.baseUrl;
       const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
-      params['pageNumber'] = params['pageNumber'] ? params['pageNumber'] : this['tableData']['pageNumber'] ? this['tableData']['pageNumber'] : TableMixinConfig.PAGE_NUM_DEFAULT;
+      params[TableMixinConfig.REQUEST_FIELD_PAGENUM] = params[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? params[TableMixinConfig.REQUEST_FIELD_PAGENUM] : this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] ? this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] : TableMixinConfig.PAGE_NUM_DEFAULT;
       params['pageSize'] = params['pageSize'] ? params['pageSize'] : this['tableData']['pageSize'] ? this['tableData']['pageSize'] : TableMixinConfig.PAGE_SIZE_DEFAULT;
       // options.orderBy = this.filterForm && this.filterForm.orderBy ? this.filterForm.orderBy : ''
       if (baseUrl) {
