@@ -86,7 +86,7 @@ const TableMixin = {
       console.log('table-mixin: setUrlFilters function');
       const self = this;
       filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] = (filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] : self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM]) || TableMixinConfig.PAGE_NUM_DEFAULT;
-      filters['pageSize'] = (filters['pageSize'] ? filters['pageSize'] : self['tableData']['pageSize']) || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters['pageSize'] = (filters['pageSize'] ? filters['pageSize'] : self['tableData']['pageSize']) || TableMixinConfig.PAGE_SIZE_DEFAULT;
       self.$router.replace({path: self.$route.path, query: filters});
       self.fetchTableData(filters);
     },
