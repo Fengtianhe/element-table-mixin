@@ -22,7 +22,8 @@ import {TableMixinConfig} from 'element-table-mixin'
 // 其他配置详见文档
 TableMixinConfig.REQUEST = axios
 ```
-
+##### 使用内置组建：
+>>  这种方式不是特别灵活，还请大家提PR完善
 ```vue
 <template>
   <div>
@@ -88,6 +89,50 @@ export default {
 ### 效果图
 ![alt 效果图](http://blog.fengtianhe.cn/images/element-table-mixin.png)
 
+##### 自定义table方式
+```javascript
+import {TableMixin} from 'element-table-mixin'
+
+export default {
+    ...
+    mixins: [TableMixin],
+    data() {
+        return {
+            baseUrl: UserService.URL_USER_LIST,
+            filterForm: {},
+            tableData: {}
+        }
+    },
+    created() {
+        this.setTableFilter()
+    }
+    ...
+}
+```
+
+#### 使用分页组件
+```vue
+<template>
+  <table-pagination
+      :base-url="baseUrl"
+      :datasource.sync="tableData"
+  />
+</template>
+
+<script>
+import {TablePagination} from 'element-table-mixin'
+export default {
+  components: {TablePagination},
+  data() {
+    return {
+      baseUrl: UserService.URL_USER_LIST,
+      filterForm: {},
+      tableData: {}
+    }
+  },
+}
+</script>
+```
 ***
 ### 参数
 ##### props
