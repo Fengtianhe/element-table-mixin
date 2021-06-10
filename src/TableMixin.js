@@ -141,7 +141,7 @@ const TableMixin = {
       console.log('table-mixin: fetchWithPagination function');
       const self = this;
       let urlQuery = self.getFilters();
-      urlQuery['pageNumber'] = currentPage;
+      urlQuery[TableMixinConfig.REQUEST_FIELD_PAGENUM] = currentPage;
       if (self['tableData'].total) {
         self.setUrlFilters(urlQuery);
       }
