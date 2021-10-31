@@ -11,6 +11,8 @@ const TableMixinConfig = {
 
   // 请求体中的页码参数
   REQUEST_FIELD_PAGENUM: 'pageNumber',
+  // 请求体中的页数参数
+  REQUEST_FIELD_PAGESIZE: 'pageSize',
 
   // 列表数据对应字段
   RESPONSE_LIST_FIELD: 'data.lists',
