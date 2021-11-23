@@ -114,7 +114,7 @@ const TableMixin = {
             lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
             pageSize: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
             pageNumber: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
-            total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD) || 0
+            total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD, true, 0)
           };
           self.afterFetchTableData && self.afterFetchTableData();
         } catch (e) {
