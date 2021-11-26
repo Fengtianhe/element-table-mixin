@@ -5,6 +5,7 @@
         style="margin-left: -10px"
         background
         @current-change="fetchWithPagination"
+        @size-change="fetchWithPageSize"
         :current-page.sync="tableData[TableMixinConfig.REQUEST_FIELD_PAGENUM]"
         :page-size="tableData[TableMixinConfig.REQUEST_FIELD_PAGESIZE]"
         :layout="layout"
