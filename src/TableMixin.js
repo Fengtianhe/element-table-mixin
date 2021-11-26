@@ -56,6 +56,9 @@ const TableMixin = {
     },
     setFilter () {
       const self = this;
+      const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
+      // 同一个页面中请求方式保持一致
+      TableMixinConfig.REQUEST_METHOD = method
       self.setUrlFilters(self.getFilters());
     },
     getFilters: function () {
@@ -85,17 +88,17 @@ const TableMixin = {
     setUrlFilters: function (filters) {
       console.log('table-mixin: setUrlFilters function');
       const self = this;
-      filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] = (filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] : self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM]) || TableMixinConfig.PAGE_NUM_DEFAULT;
-      filters[TableMixinConfig.REQUEST_FIELD_PAGESIZE] = (filters[TableMixinConfig.REQUEST_FIELD_PAGESIZE] ? filters[TableMixinConfig.REQUEST_FIELD_PAGESIZE] : self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE]) || TableMixinConfig.PAGE_SIZE_DEFAULT;
+      filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] = filters[TableMixinConfig.REQUEST_FIELD_PAGENUM] || self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] || TableMixinConfig.PAGE_NUM_DEFAULT;
+      filters[TableMixinConfig.REQUEST_FIELD_PAGESIZE] = filters[TableMixinConfig.REQUEST_FIELD_PAGESIZE] || self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE] || TableMixinConfig.PAGE_SIZE_DEFAULT;
       self.$router.replace({path: self.$route.path, query: filters});
       self.fetchTableData(filters);
     },
     async fetchTableData (params = {}) {
       const self = this;
       const baseUrl = self.baseUrl;
-      const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
-      params[TableMixinConfig.REQUEST_FIELD_PAGENUM] = params[TableMixinConfig.REQUEST_FIELD_PAGENUM] ? params[TableMixinConfig.REQUEST_FIELD_PAGENUM] : this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] ? this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] : TableMixinConfig.PAGE_NUM_DEFAULT;
-      params[TableMixinConfig.REQUEST_FIELD_PAGESIZE] = params[TableMixinConfig.REQUEST_FIELD_PAGESIZE] ? params[TableMixinConfig.REQUEST_FIELD_PAGESIZE] : this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE] ? this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE] : TableMixinConfig.PAGE_SIZE_DEFAULT;
+      const method = TableMixinConfig.REQUEST_METHOD
+      params[TableMixinConfig.REQUEST_FIELD_PAGENUM] = params[TableMixinConfig.REQUEST_FIELD_PAGENUM] || this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGENUM] || TableMixinConfig.PAGE_NUM_DEFAULT;
+      params[TableMixinConfig.REQUEST_FIELD_PAGESIZE] = params[TableMixinConfig.REQUEST_FIELD_PAGESIZE] || this['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE] || TableMixinConfig.PAGE_SIZE_DEFAULT;
       // options.orderBy = this.filterForm && this.filterForm.orderBy ? this.filterForm.orderBy : ''
       if (baseUrl) {
         const axiosRequestConfig = {
@@ -112,8 +115,8 @@ const TableMixin = {
 
           self['tableData'] = {
             lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
-            pageSize: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
-            pageNumber: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
+            [TableMixinConfig.REQUEST_FIELD_PAGESIZE]: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
+            [TableMixinConfig.REQUEST_FIELD_PAGENUM]: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
             total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD, true, 0)
           };
           self.afterFetchTableData && self.afterFetchTableData();

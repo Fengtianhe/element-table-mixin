@@ -3,6 +3,8 @@ import axios from "axios";
 const TableMixinConfig = {
   // 默认请求
   REQUEST: axios,
+  // 请求方式
+  REQUEST_METHOD: "get",
 
   // 每页默认数量
   PAGE_SIZE_DEFAULT: 15,

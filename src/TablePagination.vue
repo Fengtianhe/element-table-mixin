@@ -5,8 +5,8 @@
         style="margin-left: -10px"
         background
         @current-change="fetchWithPagination"
-        :current-page.sync="tableData.pageNumber"
-        :page-size="tableData.pageSize"
+        :current-page.sync="tableData[TableMixinConfig.REQUEST_FIELD_PAGENUM]"
+        :page-size="tableData[TableMixinConfig.REQUEST_FIELD_PAGESIZE]"
         :layout="layout"
         :total="tableData.total"
     ></el-pagination>
@@ -15,7 +15,7 @@
 
 <script>
 import TableMixin from "./TableMixin";
-
+import {TableMixinConfig} from 'element-table-mixin';
 export default {
   name: "TablePagination",
   mixins: [TableMixin],
@@ -41,7 +41,8 @@ export default {
   },
   data() {
     return {
-      tableData: this.datasource
+      tableData: this.datasource,
+      TableMixinConfig
     }
   },
   methods: {},
