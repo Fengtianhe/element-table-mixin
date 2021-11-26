@@ -56,9 +56,6 @@ const TableMixin = {
     },
     setFilter () {
       const self = this;
-      const method = (self.tableRequestMethod || 'get').toLocaleLowerCase();
-      // 同一个页面中请求方式保持一致
-      TableMixinConfig.REQUEST_METHOD = method
       self.setUrlFilters(self.getFilters());
     },
     getFilters: function () {
@@ -152,7 +149,7 @@ const TableMixin = {
     fetchWithPageSize: function (pageSize) {
       console.log('table-mixin: fetchWithPageSize function');
       const self = this;
-      self['tableData']['pageSize'] = pageSize;
+      self['tableData'][TableMixinConfig.REQUEST_FIELD_PAGESIZE] = pageSize;
       self.setFilter();
     }
   }
