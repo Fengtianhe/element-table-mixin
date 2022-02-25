@@ -112,9 +112,9 @@ const TableMixin = {
 
           self['tableData'] = {
             lists: getPropByPath(response, TableMixinConfig.RESPONSE_LIST_FIELD) || [],
-            [TableMixinConfig.REQUEST_FIELD_PAGESIZE]: getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT,
-            [TableMixinConfig.REQUEST_FIELD_PAGENUM]: getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT,
-            total: getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD, true, 0)
+            [TableMixinConfig.REQUEST_FIELD_PAGESIZE]: Number(getPropByPath(response, TableMixinConfig.RESPONSE_PAGESIZE_FIELD) || TableMixinConfig.PAGE_SIZE_DEFAULT),
+            [TableMixinConfig.REQUEST_FIELD_PAGENUM]: Number(getPropByPath(response, TableMixinConfig.RESPONSE_PAGENUM_FIELD) || TableMixinConfig.PAGE_NUM_DEFAULT),
+            total: Number(getPropByPath(response, TableMixinConfig.RESPONSE_TOTAL_FIELD, true, 0))
           };
           self.afterFetchTableData && self.afterFetchTableData();
         } catch (e) {
