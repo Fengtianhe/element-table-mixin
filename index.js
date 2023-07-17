@@ -3,7 +3,7 @@ import TablePagination from './src/TablePagination'
 import TableMixin from './src/TableMixin'
 import TableMixinConfig from './src/TableMixinConfig'
 import TableMixinObjectHelper from './src/TableMixinObjectHelper'
-import TableMixinMethods from './src/TableMixinMethods'
+import TableFormatterMixin from './src/TableFormatterMixin'
 
 export {
   TableContainer,
@@ -11,5 +11,5 @@ export {
   TableMixin,
   TableMixinConfig,
   TableMixinObjectHelper,
-  TableMixinMethods
+  TableFormatterMixin
 }
