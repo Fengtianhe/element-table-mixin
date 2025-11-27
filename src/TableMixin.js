@@ -64,7 +64,7 @@ const TableMixin = {
       let filters = self.filterForm;
       for (const f in filters) {
         let filter = filters[f];
-        if (filter) {
+        if (filter !== null && typeof (filter) !== 'undefined' && filter !== '') {
           if (typeof (filter) === 'number' || typeof (filter) === 'string' || typeof (filter) === 'boolean') {
             s[f] = filter;
             continue;
